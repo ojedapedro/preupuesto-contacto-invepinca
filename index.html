@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Presupuesto - INVEPINCA</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #5a9eccd2;
+            color: #f3f0f0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            max-height: 150px;
+            margin-right: 20px;
+        }
+        
+        .logo h1 {
+            color: var(--primary);
+            font-size: 24px;
+        }
+        
+        .calculator-section {
+            background-color: rgba(93, 196, 191, 0.562);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(221, 55, 55, 0.651);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        select:focus, input:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .product-presentation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .presentation-option {
+            flex: 1;
+            min-width: 150px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .presentation-option:hover {
+            border-color: var(--secondary);
+        }
+        
+        .presentation-option.selected {
+            border-color: var(--secondary);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .presentation-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .presentation-price {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .presentation-coverage {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .results {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .results h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .total-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent);
+            margin: 10px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-whatsapp {
+            background-color: #25D366;
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+        }
+        
+        .whatsapp-section {
+            margin-top: 60px;
+        }
+        
+        .whatsapp-container {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(228, 45, 45, 0.712);
+        }
+        
+        @media (max-width: 768px) {
+            .product-presentation {
+                flex-direction: column;
+            }
+            
+            .presentation-option {
+                width: 100%;
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <!-- Aquí se insertaría el logo que proporcionaste -->
+                <img src="https://i.ibb.co/hJ48PnDC/Banner-moderno-de-INVEPINCA.png" alt="INVEPINCA Logo">
+                <h1>INVEPINCA - Impermeabilización</h1>
+            </div>
+            <div class="contact-info">
+                <p><strong>J-40490348-8</strong></p>
+            </div>
+        </header>
+        
+        <section class="calculator-section">
+            <h2 class="section-title">Calculadora de Presupuesto</h2>
+            
+            <form id="budget-calculator">
+                <div class="form-group">
+                    <label for="product">Producto</label>
+                    <select id="product" name="product" required>
+                        <option value="">Seleccione un producto</option>
+                        <option value="manto">Manto</option>
+                        <option value="pintura-elastomerica">Pintura Elastomerica</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Presentación</label>
+                    <div class="product-presentation" id="presentation-options">
+                        <!-- Las opciones se cargarán dinámicamente según el producto seleccionado -->
+                        <div class="presentation-option">
+                            <div class="presentation-name">Seleccione un producto primero</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantity">Cantidad Total (metros cuadrados)</label>
+                    <input type="number" id="quantity" name="quantity" min="1" placeholder="Ingrese la cantidad en m²" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Mano de Obra</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="labor" name="labor">
+                        <label for="labor">Incluir instalación profesional (30% adicional)</label>
+                    </div>
+                </div>
+                
+                <button type="button" id="calculate-btn" class="btn">Calcular Presupuesto</button>
+                
+                <div class="results" id="results" style="display: none;">
+                    <h3>Resumen de Presupuesto</h3>
+                    <p><strong>Producto:</strong> <span id="result-product"></span></p>
+                    <p><strong>Presentación:</strong> <span id="result-presentation"></span></p>
+                    <p><strong>Cantidad:</strong> <span id="result-quantity"></span> m²</p>
+                    <p><strong>Mano de obra:</strong> <span id="result-labor"></span></p>
+                    <p class="total-price">Total: $<span id="result-total"></span></p>
+                    
+                    <a href="#" id="whatsapp-btn" class="btn btn-whatsapp">Enviar por WhatsApp</a>
+                </div>
+            </form>
+        </section>
+        
+        <section class="whatsapp-section">
+            <h3 class="section-title">Este es un estimado basado en los datos proporcionados. Para un presupuesto exacto, contacta con nuestros especialistas.</h2>
+            <div class="whatsapp-container">
+                <iframe src="https://whatsform.com/dNFs-4" width="100%" height="950" frameBorder="0"></iframe>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Datos de productos y presentaciones actualizados
+        const products = {
+            'manto': {
+                name: 'Manto',
+                presentations: [
+                    { name: 'Invemanto 9 capas incluye pega manto', price: 200, coverage: 10 },
+                    { name: 'Invemanto 7 capas incluye pega manto', price: 180, coverage: 8 },
+                    { name: 'Invemanto 6 capas incluye pega manto', price: 160, coverage: 7 },
+                    { name: 'Invemanto 5 capas incluye pega manto', price: 140, coverage: 6 },
+                    { name: 'Kit tapa goteras (1/4 de pega manto y 10 parchos de invemanto de 15 cm x 15 cm)', price: 50, coverage: 0 }
+                ]
+            },
+            'pintura-elastomerica': {
+                name: 'Pintura Elastomerica',
+                presentations: [
+                    { name: 'Cuñete 5/1', price: 100, coverage: 5 },
+                    { name: 'Cuñete 4/1', price: 90, coverage: 4 },
+                    { name: 'Galon', price: 25, coverage: 1 },
+                    { name: 'Kit cuñete 4/1 con 18 m² de malla poliester', price: 150, coverage: 18 },
+                    { name: 'Kit galon 1/1 con 4.5 m² de malla poliester', price: 40, coverage: 4.5 },
+                    { name: 'Malla poliester m²', price: 5, coverage: 1 }
+                ]
+            }
+        };
+
+        // Elementos del DOM
+        const productSelect = document.getElementById('product');
+        const presentationOptions = document.getElementById('presentation-options');
+        const quantityInput = document.getElementById('quantity');
+        const laborCheckbox = document.getElementById('labor');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resultsDiv = document.getElementById('results');
+        const resultProduct = document.getElementById('result-product');
+        const resultPresentation = document.getElementById('result-presentation');
+        const resultQuantity = document.getElementById('result-quantity');
+        const resultLabor = document.getElementById('result-labor');
+        const resultTotal = document.getElementById('result-total');
+        const whatsappBtn = document.getElementById('whatsapp-btn');
+
+        // Variables para almacenar selecciones
+        let selectedProduct = null;
+        let selectedPresentation = null;
+
+        // Evento cuando se selecciona un producto
+        productSelect.addEventListener('change', function() {
+            const productId = this.value;
+            
+            if (productId && products[productId]) {
+                selectedProduct = products[productId];
+                renderPresentationOptions(selectedProduct.presentations);
+            } else {
+                selectedProduct = null;
+                presentationOptions.innerHTML = '<div class="presentation-option"><div class="presentation-name">Seleccione un producto primero</div></div>';
+            }
+        });
+
+        // Función para renderizar las opciones de presentación
+        function renderPresentationOptions(presentations) {
+            presentationOptions.innerHTML = '';
+            
+            presentations.forEach((presentation, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'presentation-option';
+                optionDiv.dataset.index = index;
+                
+                optionDiv.innerHTML = `
+                    <div class="presentation-name">${presentation.name}</div>
+                    <div class="presentation-price">$${presentation.price}</div>
+                    ${presentation.coverage > 0 ? `<div class="presentation-coverage">Cubre: ${presentation.coverage} m²</div>` : '<div class="presentation-coverage">No especifica rendimiento</div>'}
+                `;
+                
+                optionDiv.addEventListener('click', function() {
+                    // Remover la clase selected de todas las opciones
+                    document.querySelectorAll('.presentation-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Agregar la clase selected a la opción clickeada
+                    this.classList.add('selected');
+                    
+                    // Guardar la presentación seleccionada
+                    selectedPresentation = presentation;
+                });
+                
+                presentationOptions.appendChild(optionDiv);
+            });
+        }
+
+        // Evento para calcular el presupuesto
+        calculateBtn.addEventListener('click', function() {
+            // Validaciones
+            if (!selectedProduct) {
+                alert('Por favor, seleccione un producto');
+                return;
+            }
+            
+            if (!selectedPresentation) {
+                alert('Por favor, seleccione una presentación');
+                return;
+            }
+            
+            const quantity = parseInt(quantityInput.value);
+            if (!quantity || quantity <= 0) {
+                alert('Por favor, ingrese una cantidad válida');
+                return;
+            }
+            
+            // Calcular presupuesto
+            const includeLabor = laborCheckbox.checked;
+            let total = 0;
+            
+            // Calcular cantidad de productos necesarios
+            let productUnits = 0;
+            if (selectedPresentation.coverage > 0) {
+                productUnits = Math.ceil(quantity / selectedPresentation.coverage);
+            } else {
+                productUnits = 1; // Para productos sin cobertura específica (Kit tapa goteras)
+            }
+            
+            // Calcular costo de productos
+            total = productUnits * selectedPresentation.price;
+            
+            // Agregar costo de mano de obra si está seleccionado
+            if (includeLabor) {
+                total += total * 0.3; // 30% adicional
+            }
+            
+            // Mostrar resultados
+            resultProduct.textContent = selectedProduct.name;
+            resultPresentation.textContent = selectedPresentation.name;
+            resultQuantity.textContent = quantity;
+            resultLabor.textContent = includeLabor ? 'Incluida' : 'No incluida';
+            resultTotal.textContent = total.toFixed(2);
+            
+            resultsDiv.style.display = 'block';
+            
+            // Configurar el enlace de WhatsApp
+            const message = `Hola, me interesa solicitar un presupuesto para:\n\n` +
+                           `Producto: ${selectedProduct.name}\n` +
+                           `Presentación: ${selectedPresentation.name}\n` +
+                           `Cantidad: ${quantity} m²\n` +
+                           `Mano de obra: ${includeLabor ? 'Sí' : 'No'}\n` +
+                           `Total estimado: $${total.toFixed(2)}\n\n` +
+                           `Por favor, contáctenme para más detalles.`;
+            
+            whatsappBtn.href = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        });
+    </script>
+</body>
+</html>
